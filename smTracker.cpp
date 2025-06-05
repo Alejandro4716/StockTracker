@@ -1,13 +1,13 @@
 #include <iostream>		//needed for input/output
 #include <string> 		//needed for dealing with strings
-#include <curl/curl.h>		//needed for making API requests
-#include <json/json.h> 		//needed for parsing JSON responses 
 #include <map>			//needed for map usage
 #include <iomanip> 		//needed for formatting 
 #include <cstdlib>		//needed for system calls 
 #include <chrono>		//needed for time
 #include <thread>		//needed for sleep
+#include <vector>
 
+#include "stocks.h"
 
 using namespace std;			//simplicity 
 using namespace std::this_thread; 	//sleep
@@ -17,90 +17,35 @@ using namespace std::chrono;		//time
 
 
 
-const string API = "cvh1j41r01qi76d5vvcgcvh1j41r01qi76d5vvd0";		//API key for finnhub data
-
-
-
-
-
-size_t WriteCallback (void* contents, size_t size, size_t nmemb, string* output) {		//function to handle API responses 
-
-	//contents : pointer to response data
-	//size : size of memory blocks received 
-	//nmemb : number of memory blocks received 
-	
-	
-	output->append((char*)contents, size * nmemb); 		//adds data to output string
-	return size * nmemb; 					//returns total size of data received 
-};
-
-
-
-
-
-
-double getStockPrice (const string& symbol) {			//retrieves stock price for a given stock
-
-	CURL* curl; 			//creates cURL object to handle API call
-	CURLcode result; 		//stores result of the API call (success or failure)
-	string readBuffer; 		//stores the API response in JSON format
-
-	string url = "https://finnhub.io/api/v1/quote?symbol=" + symbol + "&token=" + API; 
-
-
-	curl = curl_easy_init(); 	//initialize a cURL session 
-
-	if (curl) { 
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); 			//set API url
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);		//set callback function 
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer); 		//store response in buffer
-		result = curl_easy_perform(curl); 					//execute request 
-		curl_easy_cleanup(curl); 						//clean up
-
-		if (result != CURLE_OK) {
-			cerr<<"Failed to fetch data"<<endl; 
-			return -1; 
-		} 
-	}
-
-
-	Json::Reader reader;		//creates a json parser  
-	Json::Value jsonData; 		//holds parsed json data
-
-	if (reader.parse(readBuffer, jsonData)) { 						//converts json string into an object
-		string priceStr = jsonData["c"].asString();					//extracts stock price from json data
-		return priceStr.empty() ? -1 : stod(priceStr); 					//converts price into a double
-												// if price is missing return -1
-	} 
-
-return 0.00;
-};
-
-
-
-
-
-
-
 int main() { 
 	
 	//variables 
-	int numStocks = 8; 											//number of stocks being tracked
+	int numStocks = 4; 											//number of stocks being tracked
 	int iterations = 1; 											//tracks the number of times the program updates stock prices 
+
 	
 	map<string, double> stockPrices; 									//map pairing stock symbols to their respective prices 
 	map<string, double> previousStockPrices; 								//map tracking the previous prices of stocks 
 
-	vector<string> stockSymbols = {"AAPL","NVDA", "AMZN", "COST", "MSFT" , "JPM", "CRWD", "SPY"};		//vector contain stock symbols being tracked 
+
+	vector<string> stockSymbols = {"AAPL","NVDA", "MSFT" , "SPY"};						//vector containing stock symbols
+	vector<string> stockNames = {"Apple", "Nvidia", "Microsoft", "S&P 500"};				//vector containg stock names 
+	vector<unique_ptr<Security>> holdings;									//vector of security types 
+
+
+
+	for (int i=0; i<numStocks; i++)										//fills up vector with stock objects 
+		holdings.emplace_back(make_unique<Stock>(stockSymbols[i], stockNames[i])); 
+	
+
 
 
 	while (true) {							//while loop contains the rest of the logic, ensure the continuous refreshing of stock prices 
 
 
-		for (int i=0; i<numStocks; i++) { 				//initialize the map, pairing a stock's symbol with its price
-			double price = getStockPrice(stockSymbols[i]);		//sets stock price  
-			stockPrices[stockSymbols[i]] = price; 			//pairs price to symbol
-		}
+		for (int i=0; i<numStocks; i++)				//initialize the map, pairing a stock's symbol with its price
+			stockPrices[stockNames[i]] = holdings[i]->getPrice(); 
+		
 
 		
 		system("clear");		//clears display
