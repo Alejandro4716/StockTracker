@@ -1,8 +1,10 @@
 #include "ETFs.h"
 
 //constructor
+//uses security class to initialize ETF object and leaves expenseRatio at 0.0 to be updated later
 ETF::ETF(string sym, string nm) : Security(sym, nm), expenseRatio(0.0) {}
 
+//sets the expense ratio of the ETF by fetching data from the API
 void ETF::setExpenseRatio() { 
 
     CURL* curl; 
@@ -34,10 +36,14 @@ void ETF::setExpenseRatio() {
     }
 }
 
+
+//returns the expense ratio of the ETF
 double ETF::getExpenseRatio() const {
     return expenseRatio;
 }
 
+
+//displays the ETF information including symbol, price, and expense ratio
 void ETF::displayInfo() const {
 
     cout << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << endl;

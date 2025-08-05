@@ -8,6 +8,8 @@
 #include <vector>
 
 #include "stocks.h"
+#include "ETFs.h"
+#include "MutualFunds.h"
 
 using namespace std;			//simplicity 
 using namespace std::this_thread; 	//sleep

@@ -10,12 +10,14 @@ class MutualFund : public Security   {
 
 	private: 
 
-		const double minPurchaseAmt; 
+		//net asset value 
+		double NAV; 
 
 	public: 
 		MutualFund(string sym, string nm); 		//constructor
 		void displayInfo() const override; 		//overrides displayInfo
-		double getMinPurchaseAmt() const; 
+		double getNAV() const; 
+		void setNAV();
 }; 
 
 #endif
