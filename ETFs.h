@@ -1,5 +1,5 @@
-#ifndef STOCKS_H
-#define STOCKS_H
+#ifndef ETFs_H
+#define ETFs_H
 #include "securities.h"
 using namespace std;
 
@@ -9,15 +9,16 @@ class ETF : public Security {
 
 	private: 
 		
-		const double expenseRatio;	
+		//expense ratio of the ETF
+		double expenseRatio;	
 
 
 	public: 
 
 		ETF(string sym, string nm); 			//constructor 
 		void displayInfo() const override; 		//overrides displayInfo in Security class
-		void setExpenseRatio(); 
-		double getExpenseRatio(); 
+		void setExpenseRatio(); 				//sets the expense ratio of the ETF by fetching data from the API	
+		double getExpenseRatio() const; 		//returns the expense ratio of the ETF
 }; 
 
 #endif 
