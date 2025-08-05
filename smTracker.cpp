@@ -98,7 +98,7 @@ int main() {
 		cout<<endl; 
 		cout<<endl; 
 
-	
+	cout<< " ajrjf'" << endl;	
 		previousStockPrices = stockPrices; 			//set previousStock prices equal to current stockPrice to track prices for the next iteration
 
 		cout<<"Iteration #" << iterations <<endl; 		//tracks how many times the program has updated stock prices 
