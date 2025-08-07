@@ -1,3 +1,4 @@
+/*								logic works however finhub's free tier does not support mutual funds, so this is commented out
 #ifndef MUTUAL_FUNDS
 #define MUTUAL_FUNDS
 #include "securities.h"
@@ -21,6 +22,7 @@ class MutualFund : public Security   {
 }; 
 
 #endif
+*/ 
 
 
 

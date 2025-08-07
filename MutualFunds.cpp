@@ -1,3 +1,6 @@
+/*              logic works however finhub's free tier does not support mutual funds, so this is commented out
+
+
 #include "MutualFunds.h"
 
 
@@ -47,3 +50,5 @@ double MutualFund::getNAV() const {
 void MutualFund::displayInfo() const { 
         cout << getSymbol() << ": " << " @ " << getPrice() << " | NAV: " << getNAV() << "%" << endl;
 }
+
+*/

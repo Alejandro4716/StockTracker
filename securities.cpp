@@ -20,6 +20,7 @@ Security::Security(string sym, string nm) {
 
 	symbol = sym; 
 	name = nm; 
+        currentPrice = 0.0;
 	updatePrice(); 
 }; 
 
@@ -43,12 +44,19 @@ double Security::getPrice() const {
 	return currentPrice;
 };
 
+double Security::getPreviousPrice() const {
+        return previousPrice;
+}
+
 
 
 
 
 void Security::updatePrice () const {                   //retrieves stock price for a given stock
 
+        previousPrice = currentPrice;                       //store previous price
+
+        //cURL setup
         CURL* curl;                     //creates cURL object to handle API call
         CURLcode result;                //stores result of the API call (success or failure)
         string readBuffer;              //stores the API response in JSON format

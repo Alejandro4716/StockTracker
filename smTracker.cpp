@@ -9,7 +9,7 @@
 
 #include "stocks.h"
 #include "ETFs.h"
-#include "MutualFunds.h"
+//#include "MutualFunds.h"		logic works however finhub's free tier does not support mutual funds, so this is commented out
 
 using namespace std;			//simplicity 
 using namespace std::this_thread; 	//sleep
@@ -21,95 +21,69 @@ using namespace std::chrono;		//time
 
 int main() { 
 	
-	//variables 
-	int numStocks = 4; 											//number of stocks being tracked
-	int iterations = 1; 											//tracks the number of times the program updates stock prices 
+	//vector containg stock names 
+	vector<unique_ptr<Security>> holdings;									//vector of security types
 
-	
-	map<string, double> stockPrices; 									//map pairing stock symbols to their respective prices 
-	map<string, double> previousStockPrices; 								//map tracking the previous prices of stocks 
+	holdings.emplace_back(make_unique<Stock>("AAPL", "Apple Inc."));		//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("GOOGL", "Alphabet Inc."));		//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("AMZN", "Amazon.com Inc."));		//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("MSFT", "Microsoft Corp."));		//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("TSLA", "Tesla Inc."));			//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("NFLX", "Netflix Inc."));			//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("META", "Meta Platforms Inc."));	//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("NVDA", "NVIDIA Corp."));			//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("BRK.B", "Berkshire Hathaway Inc."));	//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("V", "Visa Inc."));				//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("JPM", "JPMorgan Chase & Co."));	//adds a stock to the holdings vector
+	holdings.emplace_back(make_unique<Stock>("WMT", "Walmart Inc."));			//adds a stock to the holdings vector
 
-
-	vector<string> stockSymbols = {"AAPL","NVDA", "MSFT" , "SPY"};						//vector containing stock symbols
-	vector<string> stockNames = {"Apple", "Nvidia", "Microsoft", "S&P 500"};				//vector containg stock names 
-	vector<unique_ptr<Security>> holdings;									//vector of security types 
-
-
-
-	for (int i=0; i<numStocks; i++)										//fills up vector with stock objects 
-		holdings.emplace_back(make_unique<Stock>(stockSymbols[i], stockNames[i])); 
-	
 	holdings.emplace_back(make_unique<ETF>("SPY", "S&P 500 ETF"));		//adds an ETF to the holdings vector
-	holdings.emplace_back(make_unique<MutualFund>("VTSAX", "Vanguard Total Stock Market Index Fund")); //adds a Mutual Fund to the holdings vector
+	holdings.emplace_back(make_unique<ETF>("QQQ", "Nasdaq-100 ETF"));	//adds an ETF to the holdings vector
+	holdings.emplace_back(make_unique<ETF>("IWM", "Russell 2000 ETF"));	//adds an ETF to the holdings vector
+	holdings.emplace_back(make_unique<ETF>("VTI", "Vanguard Total Stock Market ETF")); //adds an ETF to the holdings vector
+	holdings.emplace_back(make_unique<ETF>("EFA", "iShares MSCI EAFE ETF")); //adds an ETF to the holdings vector
+	holdings.emplace_back(make_unique<ETF>("EEM", "iShares MSCI Emerging Markets ETF")); //adds an ETF to the holdings vector
+
+	//mutual funds can be added here if desired
+	//holdings.emplace_back(make_unique<MutualFund>("VTSAX", "Vanguard Total Stock Market Index Fund")); //adds a mutual fund to the holdings vector
+	//holdings.emplace_back(make_unique<MutualFund>("VFIAX", "Vanguard 500 Index Fund")); //adds a mutual fund to the holdings vector
+	//however the finnhub API does not support mutual funds in the free tier, so this is commented out
+
+	int numStocks = holdings.size();			//number of stocks in the portfolio
+	int iterations = 1;				//tracks how many times the program has updated stock prices
+
+	while (true) {							//while loop contains the rest of the logic, ensure the continuous refreshing of stock prices
 
 
-	while (true) {							//while loop contains the rest of the logic, ensure the continuous refreshing of stock prices 
-
-
-		for (int i=0; i<numStocks; i++)				//initialize the map, pairing a stock's symbol with its price
-			stockPrices[stockNames[i]] = holdings[i]->getPrice(); 
-		
+		for (const auto &security : holdings)				//initialize the map, pairing a stock's symbol with its price
+			security->updatePrice();
 
 		
 		system("clear");		//clears display
 		int count = 0;			//used to format stock and price layout
 	
 
-		if (iterations > 1) {		//after the 1st iteration 
+		for (const auto &security : holdings) {				//traverse the map, stockPrices 				
+			security->displayInfo(); 				//display information for each stock, ETF, or mutual fund
 
-			for (const auto &stocks : stockPrices) {				//traverse the map, stockPrices
-			
-				double prevPrice = previousStockPrices[stocks.first];  		//set previous price of stock
-				double diff = stocks.second - prevPrice; 			//change in price
-				
-				if (stocks.second > prevPrice) {														//if price increased 
-					cout<< "\033[32m" << setw(8) << stocks.first << ": $" << stocks.second << setw(5) << " δ" << diff << setw(10) << " " << "\033[0m";	//green text color
-				} 
-				else if (stocks.second < prevPrice) { 														//if price decreased
-					cout<< "\033[31m" << setw(8) << stocks.first << ": $" << stocks.second << setw(5) << " δ" << diff << setw(10) << " " << "\033[0m";	//output red text color
-				}
-				else {																		//if price is unchanged
-					cout<< setw(8) << stocks.first << ": $"<< stocks.second << setw(5) << " δ" << diff << setw(10) << " ";					//output default color
-				}
-				
-
-
-				count++;			//formats display to allow 4 stocks per line
-				if (count%4 == 0) { 
-					cout<<endl;
-					cout<<endl;
-				}
-			}
-		} 
-		else { 				//for the 1st iteration
-		
-			for (const auto &Security : stockPrices) {				//traverse the map, stockPrices 
-				
-				//cout<< setw(8) << stocks.first << ": $"<< stocks.second << setw(2) << " "; 	//output stocks and prices
-				
-				holdings[count]->displayInfo(); 				//display information for each stock, ETF, or mutual fund
-
-				count++; 			//formats display to allow 4 stocks per line
-				if (count%4 == 0) {
-					cout<<endl; 
-					cout<<endl;
-				}
-			}
+			count++; 			//formats display to allow 4 stocks per line
+			if (count%4 == 0) {
+				cout<<endl; 
+				cout<<endl;
+			}			
 		}
 	
 
 		cout<<endl; 
 		cout<<endl; 
 
-
-		previousStockPrices = stockPrices; 			//set previousStock prices equal to current stockPrice to track prices for the next iteration
-
+		
 		cout<<"Iteration #" << iterations <<endl; 		//tracks how many times the program has updated stock prices 
 		iterations++;
 
-		
-		cout<<"Updating data in 9 seconds..."<<endl; 		//stock prices are refreshed every 9 seconds 
-		sleep_for(seconds(9)); 					//program sleeps for 9 seconds before moving to the next iteration 
+
+		cout<<"Updating data in 120 seconds..."<<endl; 		//stock prices are refreshed every 120 seconds 
+		sleep_for(seconds(120)); 					//program sleeps for 120 seconds before moving to the next iteration 
 	}
 				
 			

@@ -48,6 +48,16 @@ double ETF::getExpenseRatio() const {
 //displays the ETF information including symbol, price, and expense ratio
 void ETF::displayInfo() const {
 
-    cout << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << endl;
+    if (previousPrice == 0.0) {
+        cout << setw(8) << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << endl;
+    }
+    else if (currentPrice > previousPrice) {
+        cout << "\033[32m" << setw(8) << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << "\033[0m" << endl;
+    } 
+    else if (currentPrice < previousPrice) {
+        cout << "\033[31m" << setw(8) << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << "\033[0m" << endl;
+    }
+    else {
+        cout << setw(8) << getSymbol() << ": " << " @ " << getPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << endl;
+    }
 };
-
