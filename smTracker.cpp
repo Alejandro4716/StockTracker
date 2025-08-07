@@ -28,21 +28,15 @@ int main() {
 	holdings.emplace_back(make_unique<Stock>("GOOGL", "Alphabet Inc."));		//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("AMZN", "Amazon.com Inc."));		//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("MSFT", "Microsoft Corp."));		//adds a stock to the holdings vector
-	holdings.emplace_back(make_unique<Stock>("TSLA", "Tesla Inc."));			//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("NFLX", "Netflix Inc."));			//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("META", "Meta Platforms Inc."));	//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("NVDA", "NVIDIA Corp."));			//adds a stock to the holdings vector
-	holdings.emplace_back(make_unique<Stock>("BRK.B", "Berkshire Hathaway Inc."));	//adds a stock to the holdings vector
-	holdings.emplace_back(make_unique<Stock>("V", "Visa Inc."));				//adds a stock to the holdings vector
 	holdings.emplace_back(make_unique<Stock>("JPM", "JPMorgan Chase & Co."));	//adds a stock to the holdings vector
-	holdings.emplace_back(make_unique<Stock>("WMT", "Walmart Inc."));			//adds a stock to the holdings vector
 
 	holdings.emplace_back(make_unique<ETF>("SPY", "S&P 500 ETF"));		//adds an ETF to the holdings vector
 	holdings.emplace_back(make_unique<ETF>("QQQ", "Nasdaq-100 ETF"));	//adds an ETF to the holdings vector
 	holdings.emplace_back(make_unique<ETF>("IWM", "Russell 2000 ETF"));	//adds an ETF to the holdings vector
 	holdings.emplace_back(make_unique<ETF>("VTI", "Vanguard Total Stock Market ETF")); //adds an ETF to the holdings vector
-	holdings.emplace_back(make_unique<ETF>("EFA", "iShares MSCI EAFE ETF")); //adds an ETF to the holdings vector
-	holdings.emplace_back(make_unique<ETF>("EEM", "iShares MSCI Emerging Markets ETF")); //adds an ETF to the holdings vector
 
 	//mutual funds can be added here if desired
 	//holdings.emplace_back(make_unique<MutualFund>("VTSAX", "Vanguard Total Stock Market Index Fund")); //adds a mutual fund to the holdings vector
