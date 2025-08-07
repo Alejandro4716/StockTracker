@@ -2,7 +2,9 @@
 
 //constructor
 //uses security class to initialize ETF object and leaves expenseRatio at 0.0 to be updated later
-ETF::ETF(string sym, string nm) : Security(sym, nm), expenseRatio(0.0) {}
+ETF::ETF(string sym, string nm) : Security(sym, nm){
+    setExpenseRatio();
+}
 
 //sets the expense ratio of the ETF by fetching data from the API
 void ETF::setExpenseRatio() { 

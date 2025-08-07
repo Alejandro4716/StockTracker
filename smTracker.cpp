@@ -71,7 +71,7 @@ int main() {
 				else {																		//if price is unchanged
 					cout<< setw(8) << stocks.first << ": $"<< stocks.second << setw(5) << " δ" << diff << setw(10) << " ";					//output default color
 				}
-
+				
 
 
 				count++;			//formats display to allow 4 stocks per line
@@ -83,11 +83,11 @@ int main() {
 		} 
 		else { 				//for the 1st iteration
 		
-			for (const auto &stocks : stockPrices) {				//traverse the map, stockPrices 
+			for (const auto &Security : stockPrices) {				//traverse the map, stockPrices 
 				
-				cout<< setw(8) << stocks.first << ": $"<< stocks.second << setw(2) << " "; 	//output stocks and prices
+				//cout<< setw(8) << stocks.first << ": $"<< stocks.second << setw(2) << " "; 	//output stocks and prices
 				
-
+				holdings[count]->displayInfo(); 				//display information for each stock, ETF, or mutual fund
 
 				count++; 			//formats display to allow 4 stocks per line
 				if (count%4 == 0) {
