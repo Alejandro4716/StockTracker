@@ -39,7 +39,8 @@ int main() {
 	for (int i=0; i<numStocks; i++)										//fills up vector with stock objects 
 		holdings.emplace_back(make_unique<Stock>(stockSymbols[i], stockNames[i])); 
 	
-
+	holdings.emplace_back(make_unique<ETF>("SPY", "S&P 500 ETF"));		//adds an ETF to the holdings vector
+	holdings.emplace_back(make_unique<MutualFund>("VTSAX", "Vanguard Total Stock Market Index Fund")); //adds a Mutual Fund to the holdings vector
 
 
 	while (true) {							//while loop contains the rest of the logic, ensure the continuous refreshing of stock prices 
