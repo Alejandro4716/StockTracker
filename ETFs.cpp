@@ -8,38 +8,17 @@ ETF::ETF(string sym, string nm) : Security(sym, nm){
 
 //sets the expense ratio of the ETF by fetching data from the API
 void ETF::updateData() const { 
-
-    CURL* curl; 
-    CURLcode result; 
-    string readBuffer;
-
-    string url = "https://finnhub.io/api/v1/etf/metric?symbol=" + symbol + "&token=" + API;
-
-    curl = curl_easy_init(); 
-
-    if (curl) { 
-        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-        result = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-
-        if (result != CURLE_OK) {
-            cerr << "Failed to fetch ETF expense ratio" << endl;
-            return; 
-        }
+    // Hard-coded expense ratios since ETF endpoints require paid Finnhub plan
+    if (symbol == "SPY") {
+        expenseRatio = 0.09;  // 0.09% for SPDR S&P 500
+    } else if (symbol == "QQQ") {
+        expenseRatio = 0.20;  // 0.20% for Invesco QQQ
+    } else if (symbol == "IWM") {
+        expenseRatio = 0.19;  // 0.19% for iShares Russell 2000
+    } else if (symbol == "VTI") {
+        expenseRatio = 0.03;  // 0.03% for Vanguard Total Stock Market
     }
-
-    Json::Reader reader;
-    Json::Value jsonData;
-
-    if (reader.parse(readBuffer, jsonData)) {
-        expenseRatio = jsonData["metric.expenseRatio"].asDouble();
-        netAssets = jsonData["metric.netAssets"].asDouble();
-    }
-}
-
-
+};
 //returns the expense ratio of the ETF
 double ETF::getExpenseRatio() const {
     return expenseRatio;
@@ -50,15 +29,19 @@ double ETF::getExpenseRatio() const {
 void ETF::displayInfo() const {
 
     if (previousPrice == 0.0) {
-        cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << endl;
+        cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << endl;
     }
     else if (currentPrice > previousPrice) {
-        cout << "\033[32m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << "\033[0m" << endl;
+        cout << "\033[32m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << "\033[0m" << endl;
     } 
     else if (currentPrice < previousPrice) {
-        cout << "\033[31m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << "\033[0m" << endl;
+        cout << "\033[31m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << "\033[0m" << endl;
     }
     else {
-        cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << " | Expense Ratio: " << getExpenseRatio() << "%" << setw(10) << " " << endl;
+        cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << endl;
     }
 };

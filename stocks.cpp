@@ -20,16 +20,32 @@ void Stock::displayInfo() const {
 	}
 
 	if (previousPrice == 0.0) {
-		cout << setw(10) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(10) << "   H: " << high << setw(10) << "   L: " << low << setw(10) << "   O: " << open << setw(10) << "   PC: " << prevClose << endl; 
+		cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+		     << "    H:" << setw(8) << fixed << setprecision(2) << high 
+		     << "    L:" << setw(8) << fixed << setprecision(2) << low 
+		     << "    O:" << setw(8) << fixed << setprecision(2) << open 
+		     << "    PC:" << setw(8) << fixed << setprecision(2) << prevClose << endl; 
 	}
 	else if (currentPrice > previousPrice) {
-		cout << "\033[32m" << setw(10) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(10) << "   H: " << high << setw(10) << "   L: " << low << setw(10) << "   O: " << open << setw(10) << "   PC: " << prevClose << endl; 
+		cout << "\033[32m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+		     << "    H:" << setw(8) << fixed << setprecision(2) << high 
+		     << "    L:" << setw(8) << fixed << setprecision(2) << low 
+		     << "    O:" << setw(8) << fixed << setprecision(2) << open 
+		     << "    PC:" << setw(8) << fixed << setprecision(2) << prevClose << "\033[0m" << endl; 
 	}
 	else if (currentPrice < previousPrice) {
-		cout << "\033[31m" << setw(10) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(10) << "   H: " << high << setw(10) << "   L: " << low << setw(10) << "   O: " << open << setw(10) << "   PC: " << prevClose << endl; 
+		cout << "\033[31m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+		     << "    H:" << setw(8) << fixed << setprecision(2) << high 
+		     << "    L:" << setw(8) << fixed << setprecision(2) << low 
+		     << "    O:" << setw(8) << fixed << setprecision(2) << open 
+		     << "    PC:" << setw(8) << fixed << setprecision(2) << prevClose << "\033[0m" << endl; 
 	}
 	else {
-		cout << setw(10) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(10) << "   H: " << high << setw(10) << "   L: " << low << setw(10) << "   O: " << open << setw(10) << "   PC: " << prevClose << endl; 
+		cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
+		     << "    H:" << setw(8) << fixed << setprecision(2) << high 
+		     << "    L:" << setw(8) << fixed << setprecision(2) << low 
+		     << "    O:" << setw(8) << fixed << setprecision(2) << open 
+		     << "    PC:" << setw(8) << fixed << setprecision(2) << prevClose << endl; 
 	}
 }; 
 
