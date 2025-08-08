@@ -31,7 +31,7 @@ class Security {
 		virtual void displayInfo() const = 0; 			//displays a securities info
 		virtual void updateData() const = 0; 		//updates security data (price, etc.)
 
-		void updatePrice();			//updates security data (price, etc.)
+		void updatePrice() const;			//updates security data (price, etc.)
 
 		string getSymbol() const; 
 		string getName() const;   

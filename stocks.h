@@ -8,16 +8,16 @@ class Stock : public Security {
 
 	//includes everything in Security class
 	private: 
-		double high; 
-		double low;
-		double open;
-		double prevClose;
+		mutable double high; 
+		mutable double low;
+		mutable double open;
+		mutable double prevClose;
 
 
 	public: 
 		explicit Stock(string sym, string nm); 		//constructor
 		void displayInfo() const override;		//overrides displayInfo in Security class
-		void updateData() const; 		//updates open, previous close, high, and low prices
+		void updateData() const override; 		//updates open, previous close, high, and low prices
 
 		double getHigh() const; 			//returns the high price of the stock
 		double getLow() const; 			//returns the low price of the stock

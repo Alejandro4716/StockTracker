@@ -72,13 +72,13 @@ void Stock::updateData() const { //updates open and previous close prices
 
 
 
-void Stock::getHigh() const { return high; };
+double Stock::getHigh() const { return high; };
 
-void Stock::getLow() const { return low; };
+double Stock::getLow() const { return low; };
 
-void Stock::getOpen() const { return open; };
+double Stock::getOpen() const { return open; };
 
-void Stock::getPrevClose() const { return prevClose; };
+double Stock::getPrevClose() const { return prevClose; };
 
 
 

@@ -10,8 +10,8 @@ class ETF : public Security {
 	private: 
 		
 		//expense ratio of the ETF
-		double expenseRatio;	
-		double netAssets; //net assets of the ETF
+		mutable double expenseRatio;	
+		mutable double netAssets; //net assets of the ETF
 
 
 	public: 
