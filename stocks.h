@@ -7,10 +7,22 @@ using namespace std;
 class Stock : public Security { 
 
 	//includes everything in Security class
+	private: 
+		double high; 
+		double low;
+		double open;
+		double prevClose;
+
 
 	public: 
 		explicit Stock(string sym, string nm); 		//constructor
 		void displayInfo() const override;		//overrides displayInfo in Security class
+		void updateData() const; 		//updates open, previous close, high, and low prices
+
+		double getHigh() const; 			//returns the high price of the stock
+		double getLow() const; 			//returns the low price of the stock
+		double getOpen() const; 			//returns the open price of the stock
+		double getPrevClose() const; 		//returns the previous close price of the stock
 }; 
 
 

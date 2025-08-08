@@ -21,7 +21,7 @@ Security::Security(string sym, string nm) {
 	symbol = sym; 
 	name = nm; 
         currentPrice = 0.0;
-	updatePrice(); 
+        updatePrice(); //initialize current price
 }; 
 
 
@@ -31,28 +31,7 @@ Security::Security(string sym, string nm) {
 Security::~Security() = default; 
 
 
-
-//getter functions 
-string Security::getSymbol() const { return symbol; };
-
-string Security::getName() const { return name; };
-
-double Security::getValue(double qty) const { return qty * getPrice(); };
-
-double Security::getPrice() const { 
-	updatePrice(); 
-	return currentPrice;
-};
-
-double Security::getPreviousPrice() const {
-        return previousPrice;
-}
-
-
-
-
-
-void Security::updatePrice () const {                   //retrieves stock price for a given stock
+void Security::updatePrice() const {                   //retrieves stock price for a given stock
 
         previousPrice = currentPrice;                       //store previous price
 
@@ -84,6 +63,24 @@ void Security::updatePrice () const {                   //retrieves stock price 
         Json::Value jsonData;           //holds parsed json data
 
         if (reader.parse(readBuffer, jsonData)) {                                               //converts json string into an object
-                currentPrice =  jsonData["c"].asDouble();                                                //returns price as double
+                currentPrice =  jsonData["c"].asDouble(); 
         } 
 };
+
+
+
+
+
+
+
+
+//getter functions 
+string Security::getSymbol() const { return symbol; };
+
+string Security::getName() const { return name; };
+
+double Security::getValue(double qty) const { return qty * getCurrentPrice(); };
+
+double Security::getCurrentPrice() const { return currentPrice; };
+
+double Security::getPreviousPrice() const { return previousPrice; };

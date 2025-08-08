@@ -26,16 +26,19 @@ class Security {
 	public: 
 	
 		explicit Security(string sym, string nm);		//constructor
+		
 		virtual ~Security(); 					//deconstructor
 		virtual void displayInfo() const = 0; 			//displays a securities info
+		virtual void updateData() const = 0; 		//updates security data (price, etc.)
+
+		void updatePrice();			//updates security data (price, etc.)
 
 		string getSymbol() const; 
 		string getName() const;   
 		double getValue(double qty) const; 
-		double getPrice() const; 	
+		double getCurrentPrice() const; 	
 		double getPreviousPrice() const; //returns the previous price of the security	
 
-		void updatePrice() const; 				//updates price 
 		
 }; 
 

@@ -11,14 +11,18 @@ class ETF : public Security {
 		
 		//expense ratio of the ETF
 		double expenseRatio;	
+		double netAssets; //net assets of the ETF
 
 
 	public: 
 
 		ETF(string sym, string nm); 			//constructor 
+
 		void displayInfo() const override; 		//overrides displayInfo in Security class
-		void setExpenseRatio(); 				//sets the expense ratio of the ETF by fetching data from the API	
+		void updateData() const override; 		//updates ETF data (expense ratio and net assets)
+
 		double getExpenseRatio() const; 		//returns the expense ratio of the ETF
+		double getNetAssets() const; 			//returns the net assets of the ETF
 }; 
 
 #endif 
