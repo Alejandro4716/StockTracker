@@ -13,19 +13,27 @@ void ETF::displayInfo() const {
 
     if (previousPrice == 0.0) {
         cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
-             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << setw(5) << getNAVPS() << setw(5) << getAUM() << endl;
+             << " | ER: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" 
+             << " | NAV: " << setw(7) << fixed << setprecision(2) << getNAVPS() 
+             << " | AUM: " << setw(6) << fixed << setprecision(1) << getAUM() << "B" << endl;
     }
     else if (currentPrice > previousPrice) {
         cout << "\033[32m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
-             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << setw(5) << getNAVPS() << setw(5) << getAUM() << "\033[0m" << endl;
+             << " | ER: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" 
+             << " | NAV: " << setw(7) << fixed << setprecision(2) << getNAVPS() 
+             << " | AUM: " << setw(6) << fixed << setprecision(1) << getAUM() << "B" << "\033[0m" << endl;
     } 
     else if (currentPrice < previousPrice) {
         cout << "\033[31m" << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
-             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << setw(5) << getNAVPS() << setw(5) << getAUM() << "\033[0m" << endl;
+             << " | ER: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" 
+             << " | NAV: " << setw(7) << fixed << setprecision(2) << getNAVPS() 
+             << " | AUM: " << setw(6) << fixed << setprecision(1) << getAUM() << "B" << "\033[0m" << endl;
     }
     else {
         cout << setw(8) << right << getSymbol() << ": @ " << setw(8) << fixed << setprecision(2) << getCurrentPrice() 
-             << " | Expense Ratio: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" << setw(5) << getNAVPS() << setw(5) << getAUM() << endl;
+             << " | ER: " << setw(5) << fixed << setprecision(2) << getExpenseRatio() << "%" 
+             << " | NAV: " << setw(7) << fixed << setprecision(2) << getNAVPS() 
+             << " | AUM: " << setw(6) << fixed << setprecision(1) << getAUM() << "B" << endl;
     }
 };
 
