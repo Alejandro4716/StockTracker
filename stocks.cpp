@@ -20,16 +20,16 @@ void Stock::displayInfo() const {
 	}
 
 	if (previousPrice == 0.0) {
-		cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << "   H: " << high << "   L: " << low << "   O: " << open << "   PC: " << prevClose << endl; 
+		cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(8) << "   H: " << high << setw(8) << "   L: " << low << setw(8) << "   O: " << open << setw(8) << "   PC: " << prevClose << endl; 
 	}
 	else if (currentPrice > previousPrice) {
-		cout << "\033[32m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << "   H: " << high << "   L: " << low << "   O: " << open << "   PC: " << prevClose << endl; 
+		cout << "\033[32m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(8) << "   H: " << high << setw(8) << "   L: " << low << setw(8) << "   O: " << open << setw(8) << "   PC: " << prevClose << endl; 
 	}
 	else if (currentPrice < previousPrice) {
-		cout << "\033[31m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << "   H: " << high << "   L: " << low << "   O: " << open << "   PC: " << prevClose << endl; 
+		cout << "\033[31m" << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(8) << "   H: " << high << setw(8) << "   L: " << low << setw(8) << "   O: " << open << setw(8) << "   PC: " << prevClose << endl; 
 	}
 	else {
-		cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << "   H: " << high << "   L: " << low << "   O: " << open << "   PC: " << prevClose << endl; 
+		cout << setw(8) << getSymbol() << ": " << " @ " << getCurrentPrice() << setw(8) << "   H: " << high << setw(8) << "   L: " << low << setw(8) << "   O: " << open << setw(8) << "   PC: " << prevClose << endl; 
 	}
 }; 
 
